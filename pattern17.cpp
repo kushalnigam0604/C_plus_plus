@@ -11,6 +11,7 @@ int main(){
         while(j<=i){
             cout<<x<<" ";
             j++;
+            x = x+1;
         }
         cout<<endl;
         i++;
