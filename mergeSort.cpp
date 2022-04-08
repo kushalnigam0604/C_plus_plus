@@ -1,55 +1,50 @@
 #include<iostream>
 using namespace std;
 
-void merge(int *arr, int s, int e) {
+void merge(int arr[], int s, int e) {
 
     int mid = (s+e)/2;
 
     int len1 = mid - s + 1;
     int len2 = e - mid;
 
-    int *first = new int[len1];
-    int *second = new int[len2];
+    int first[len1],second[len2];
 
     //copy values
-    int mainArrayIndex = s;
     for(int i=0; i<len1; i++) {
-        first[i] = arr[mainArrayIndex++];
+        first[i] = arr[s+i];
     }
 
-    mainArrayIndex = mid+1;
-    for(int i=0; i<len2; i++) {
-        second[i] = arr[mainArrayIndex++];
+    for(int j=0; j<len2; j++) {
+        second[j] = arr[mid+1+j];
     }
 
     //merge 2 sorted arrays     
-    int index1 = 0;
-    int index2 = 0;
-    mainArrayIndex = s;
+    int i = 0;
+    int j = 0;
+    int k = s;
 
-    while(index1 < len1 && index2 < len2) {
-        if(first[index1] < second[index2]) {
-            arr[mainArrayIndex++] = first[index1++];
+    while(i < len1 && j < len2) {
+        if(first[i] < second[j]) {
+            arr[k++] = first[i++];
         }
         else{
-            arr[mainArrayIndex++] = second[index2++];
+            arr[k++] = second[j++];
         }
     }   
 
-    while(index1 < len1) {
-        arr[mainArrayIndex++] = first[index1++];
+    while(i < len1) { 
+        arr[k++] = first[i++];
     }
 
-    while(index2 < len2 ) {
-        arr[mainArrayIndex++] = second[index2++];
+    while(j < len2 ) {
+        arr[k++] = second[j++];
     }
 
-    delete []first;
-    delete []second;
 
 }
 
-void mergeSort(int *arr, int s, int e) {
+void mergeSort(int arr[], int s, int e) {
 
     //base case
     if(s >= e) {

@@ -1,18 +1,22 @@
 #include <iostream>
+#include <string>
 using namespace std;
-int fib(int n){
-    if(n==0)
-    return 0;
-    if (n==1)
-    return 1;
-     fib(n-1) + fib(n-2);
-    return 0;
-}
 
 int main(){
-    int n;
+    float n;
     cin >> n;
-    fib(n);
-    
+    string s = to_string(n);
+    int q = s.find(".");
+    string integer = "";
+    string Float = "";
+    for(int i=0;i<q;i++){
+        integer = integer + s[i];
+    }
+    for(int i=q+1;i<s.size()-4;i++){
+        Float = Float + s[i];
+    }
+    cout<<"Integer : " <<integer<<endl;
+    cout<<"Float : " <<Float<<endl;
+
     return 0;
 }
