@@ -11,19 +11,34 @@ class Node{
     }
 };
 
-void insertAtHead(Node* &head, int d){        //   &head isliye likhenge taki head ki copy create na ho and original position p hi changes ho jaye.
-// new node create
-Node* temp = new Node(d);
-temp -> next = head;
-head = temp;
+void insertAtHead(Node* &head, Node* &tail, int d){        //   &head isliye likhenge taki head ki copy create na ho and original position p hi changes ho jaye.
 
+// new node create
+if(head == NULL){
+    Node* temp = new Node(d);
+    head = temp;
+    tail = temp;
+}
+else{
+    Node* temp = new Node(d);
+    temp -> next = head;
+    head = temp;
+}
 }
 
-void insertAtTail(Node* &tail, int d){
+void insertAtTail(Node* &head, Node* &tail, int d){
     // new node create
-Node* temp = new Node(d);
-tail->next = temp;
-tail = temp ;
+    if(head == NULL)
+    {
+       Node* temp = new Node(d);
+       head = temp;
+       tail = temp;
+   }
+    else{
+       Node* temp = new Node(d);
+       tail->next = temp;
+       tail = temp ;
+   }
 
 }
 
@@ -32,7 +47,7 @@ void insertAtAnyPosition(Node* &head, Node* &tail , int position, int d){
     // Insert at starting--
 
     if(position == 1){
-        insertAtHead(head, d);
+        insertAtHead(head,tail, d);
         return;
     }
     int count = 1;
@@ -44,13 +59,32 @@ void insertAtAnyPosition(Node* &head, Node* &tail , int position, int d){
     }
 
     if(temp -> next == NULL){
-        insertAtTail(tail , d );
+        insertAtTail(head,tail , d );
         return;
     }
 
     Node* nodeToInsert = new Node(d);
     nodeToInsert -> next = temp -> next;
     temp -> next = nodeToInsert;
+}
+
+void deleteNode(int position , Node* &head ,Node* &tail){
+    if(position == 1){
+        head = head -> next;
+    }
+    else {
+        Node* curr = head;
+        Node* prev = NULL;
+        int count = 1;
+        while(count < position ){
+            prev = curr;
+            curr = curr -> next;
+            count++;
+        }
+        prev -> next = curr -> next;
+        if(prev -> next == NULL)
+        tail = prev;
+    }
 }
 
 void print(Node* &head){
@@ -65,10 +99,8 @@ void print(Node* &head){
 
 int main(){
 
-    Node* node1 = new Node(4);          // creating object in heap memory
-    //  head pointed to node1
-    Node* head = node1;
-    Node* tail = node1;
+    Node* head = NULL;
+    Node* tail = NULL;
 
 // 1.
 
@@ -77,21 +109,27 @@ int main(){
 
 // 2.
 
-    // insertAtHead(head, 10);
-    // insertAtHead(head ,22);
+    insertAtHead(head, tail, 10);
+    insertAtHead(head, tail, 22);
 
     // print( head);
 
 // 3.
 
-    insertAtTail(tail, 10);
-    insertAtTail(tail, 22);
+    insertAtTail(head, tail, 10);
+    insertAtTail(head, tail, 22);
+    insertAtTail(head, tail, 30);
 
-    print( head);
+    // print( head);
 
 // 4.
 
     insertAtAnyPosition(head, tail, 3, 20);
 
-    print(head);
+    // print(head);
+
+// 5.
+    // deleteNode(5, head, tail);
+
+    print(head);    
 }
